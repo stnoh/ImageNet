@@ -38,7 +38,7 @@ class VGG(nn.Module):
         super(VGG, self).__init__()
         self.features = features
         self.classifier = nn.Sequential(
-            nn.Linear(512 * 7 * 7, 4096),
+            nn.Linear(512 * 3 * 3, 4096), ## 96x96x3 -(1/32 by 5 blocks)-> 3x3x512 (=4608)
             nn.ReLU(inplace=True),
             nn.Dropout(),
             nn.Linear(4096, 4096),

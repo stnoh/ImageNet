@@ -14,7 +14,7 @@ def data_loader(root, batch_size=256, workers=1, pin_memory=True):
     train_dataset = datasets.ImageFolder(
         traindir,
         transforms.Compose([
-            transforms.RandomResizedCrop(224),
+            transforms.RandomResizedCrop(96),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
             normalize
@@ -23,8 +23,8 @@ def data_loader(root, batch_size=256, workers=1, pin_memory=True):
     val_dataset = datasets.ImageFolder(
         valdir,
         transforms.Compose([
-            transforms.Resize(256),
-            transforms.CenterCrop(224),
+            transforms.Resize(128),
+            transforms.CenterCrop(96),
             transforms.ToTensor(),
             normalize
         ])
