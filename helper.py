@@ -1,4 +1,4 @@
-import shutil
+import shutil, os
 import torch
 
 
@@ -36,10 +36,11 @@ def accuracy(output, target, topk=(1,)):
     return res
 
 
-def save_checkpoint(state, is_best, filename='alex_checkpoint.pth'):
+def save_checkpoint(state, is_best, filename='vgg13_bn.pth'):
     torch.save(state, filename)
     if is_best:
-        shutil.copyfile(filename, 'alex_model_best.pth')
+        filename_best = os.path.splitext(filename)[0]+'_best.pth'
+        shutil.copyfile(filename, filename_best)
 
 
 def adjust_learning_rate(optimizer, epoch, init_lr):

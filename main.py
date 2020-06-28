@@ -21,7 +21,7 @@ model_names = [
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('data', metavar='DIR', help='path to dataset')
-parser.add_argument('-a', '--arch', metavar='ARCH', default='alexnet', choices=model_names,
+parser.add_argument('-a', '--arch', metavar='ARCH', default='vgg13_bn', choices=model_names,
                     help='model architecture: ' + ' | '.join(model_names) + ' (default: alexnet)')
 parser.add_argument('--epochs', default=90, type=int, metavar='N',
                     help='numer of total epochs to run')
@@ -173,8 +173,8 @@ def train(train_loader, model, criterion, optimizer, epoch, print_freq):
         # measure data loading time
         data_time.update(time.time() - end)
 
-        target = target.cuda(async=True)
-        input = input.cuda(async=True)
+        target = target.cuda(non_blocking=True)
+        input = input.cuda(non_blocking=True)
 
         # compute output
         output = model(input)
@@ -217,8 +217,8 @@ def validate(val_loader, model, criterion, print_freq):
 
     end = time.time()
     for i, (input, target) in enumerate(val_loader):
-        target = target.cuda(async=True)
-        input = input.cuda(async=True)
+        target = target.cuda(non_blocking=True)
+        input = input.cuda(non_blocking=True)
         with torch.no_grad():
             # compute output
             output = model(input)
