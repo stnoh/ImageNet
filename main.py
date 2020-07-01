@@ -22,14 +22,14 @@ model_names = [
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('data', metavar='DIR', help='path to dataset')
 parser.add_argument('-a', '--arch', metavar='ARCH', default='vgg13_bn', choices=model_names,
-                    help='model architecture: ' + ' | '.join(model_names) + ' (default: alexnet)')
+                    help='model architecture: ' + ' | '.join(model_names) + ' (default: vgg13_bn)')
 parser.add_argument('--epochs', default=90, type=int, metavar='N',
                     help='numer of total epochs to run')
 parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
                     help='manual epoch number (useful to restarts)')
-parser.add_argument('-b', '--batch-size', default=256, type=int, metavar='N',
-                    help='mini-batch size (default: 256)')
-parser.add_argument('--lr', '--learning-rate', default=0.01, type=float, metavar='LR',
+parser.add_argument('-b', '--batch-size', default=128, type=int, metavar='N',
+                    help='mini-batch size (default: 128)')
+parser.add_argument('--lr', '--learning-rate', default=0.001, type=float, metavar='LR',
                     help='initial learning rate')
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
                     help='momentum')
@@ -127,8 +127,6 @@ def main():
     else:
         print("=> no checkpoint found at '{}'".format(args.resume))
 
-    # cudnn.benchmark = True
-
     # Data loading
     train_loader, val_loader = data_loader(args.data, args.batch_size, args.workers, args.pin_memory)
 
@@ -200,8 +198,7 @@ def train(train_loader, model, criterion, optimizer, epoch, print_freq):
                   'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
                   'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
                   'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
-                  'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
-                  'Prec@5 {top5.val:.3f} ({top5.avg:.3f})\t'.format(
+                  'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'.format(
                 epoch, i, len(train_loader), batch_time=batch_time,
                 data_time=data_time, loss=losses, top1=top1, top5=top5))
 
